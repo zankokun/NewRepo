@@ -26,9 +26,10 @@ namespace DenisApp
 
         private void update_picture_box()
         {
+            Singleton.getInstance().UpdateBounds();
             int pre_width =  Singleton.getInstance().right + padding_lr;
             int width = pre_width > 600 ? pre_width: 600;  
-            int height = Singleton.getInstance().mh+3*Singleton.getInstance().fh;
+            int height = Singleton.getInstance().mh+3*Singleton.getInstance().fh+Singleton.getInstance().arrh;
 
             Bitmap myBitmap = new Bitmap( width, height);
             pictureBox1.Width = width;
@@ -367,8 +368,10 @@ namespace DenisApp
         public int mh;
         public int fh;
         public int ord;
+        public int arrh;
         private Singleton()
         {
+            arrh = 0;
             ord = 300;
             time_slots = new List<TimeSlot>();
             arrows = new List<Tuple<TimeSlot, TimeSlot, int>>();
@@ -410,6 +413,13 @@ namespace DenisApp
                 if (Math.Abs(ts.state) > mh)
                     mh = Math.Abs(ts.state);
             }
+            int curr_arr_h = 0;
+            foreach (var ts in arrows)
+            {
+                if (curr_arr_h < ts.Item3)
+                    curr_arr_h = ts.Item3;
+            }
+            arrh = curr_arr_h+70;
         }
         public int GetWidth()
         {
