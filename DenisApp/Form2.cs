@@ -103,43 +103,6 @@ namespace DenisApp
             }
             ts_name.BackColor = Color.White;
         }
-
-        private void ts_length_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                Int32.Parse(ts_length.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Введите целое число");
-            }
-        }
-
-        private void ts_state_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                Int32.Parse(ts_state.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Введите целое число");
-            }
-        }
-
-        private void ts_graph_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                int g = Int32.Parse(ts_graph.Text);
-                if (g!=1&&g!=2&&g!=3)
-                    MessageBox.Show("Введите 1,2 или 3");
-            }
-            catch
-            {
-                MessageBox.Show("Введите 1,2 или 3");
-            }
-        }
+        
     }
 }

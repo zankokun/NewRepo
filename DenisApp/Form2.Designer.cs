@@ -96,8 +96,7 @@
             this.ts_length.Name = "ts_length";
             this.ts_length.Size = new System.Drawing.Size(100, 20);
             this.ts_length.TabIndex = 7;
-            this.ts_length.Text = "0";
-            this.ts_length.TextChanged += new System.EventHandler(this.ts_length_TextChanged);
+            this.ts_length.Text = "10";
             // 
             // ts_state
             // 
@@ -105,8 +104,7 @@
             this.ts_state.Name = "ts_state";
             this.ts_state.Size = new System.Drawing.Size(100, 20);
             this.ts_state.TabIndex = 8;
-            this.ts_state.Text = "0";
-            this.ts_state.TextChanged += new System.EventHandler(this.ts_state_TextChanged);
+            this.ts_state.Text = "10";
             // 
             // ts_graph
             // 
@@ -114,8 +112,7 @@
             this.ts_graph.Name = "ts_graph";
             this.ts_graph.Size = new System.Drawing.Size(100, 20);
             this.ts_graph.TabIndex = 9;
-            this.ts_graph.Text = "0";
-            this.ts_graph.TextChanged += new System.EventHandler(this.ts_graph_TextChanged);
+            this.ts_graph.Text = "10";
             // 
             // button1
             // 
@@ -160,6 +157,7 @@
             // 
             // ts_prev
             // 
+            this.ts_prev.DropDownWidth = 200;
             this.ts_prev.FormattingEnabled = true;
             this.ts_prev.Location = new System.Drawing.Point(146, 109);
             this.ts_prev.Name = "ts_prev";
@@ -168,6 +166,7 @@
             // 
             // ts_name
             // 
+            this.ts_name.DropDownWidth = 200;
             this.ts_name.FormattingEnabled = true;
             this.ts_name.Location = new System.Drawing.Point(146, 6);
             this.ts_name.Name = "ts_name";

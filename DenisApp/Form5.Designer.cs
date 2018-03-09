@@ -59,6 +59,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownWidth = 200;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(32, 35);
             this.comboBox1.Name = "comboBox1";

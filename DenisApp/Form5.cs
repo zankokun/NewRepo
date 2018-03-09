@@ -54,7 +54,7 @@ namespace DenisApp
                 if (comboBox2.Text == ts.name)
                     end = ts;
             }
-            if ((begin != null && end != null)&&(begin.graph != end.graph))
+            if (begin == null || end == null)
             {
                 comboBox1.BackColor = Color.MistyRose;
                 comboBox2.BackColor = Color.MistyRose;

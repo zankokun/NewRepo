@@ -26,9 +26,10 @@ namespace DenisApp
 
         private void update_picture_box()
         {
+            var font = new Font(FontFamily.GenericMonospace, 14);
             Singleton.getInstance().UpdateBounds();
             int pre_width =  Singleton.getInstance().right + padding_lr;
-            int width = pre_width > 600 ? pre_width: 600;  
+            int width = pre_width > 800 ? pre_width: 800;  
             int height = Singleton.getInstance().mh+3*Singleton.getInstance().fh+Singleton.getInstance().arrh;
 
             Bitmap myBitmap = new Bitmap( width, height);
@@ -45,7 +46,7 @@ namespace DenisApp
             fig.DrawLine(def, 0, 2* Singleton.getInstance().fh, pictureBox1.Width, 2* Singleton.getInstance().fh);
             fig.DrawLine(def, 0, 3* Singleton.getInstance().fh, pictureBox1.Width, 3* Singleton.getInstance().fh);
             fig.DrawLine(def, Singleton.getInstance().ord, 0, Singleton.getInstance().ord, pictureBox1.Height);
-            fig.DrawString( " Прибытие", SystemFonts.DialogFont, br, Singleton.getInstance().ord, 5);
+            fig.DrawString( " Прибытие", font, br, Singleton.getInstance().ord, 5);
             foreach (TimeSlot ts in Singleton.getInstance().GetState())
             {
                 Brush rec = new SolidBrush(ts.color);
@@ -56,29 +57,32 @@ namespace DenisApp
             }
             //summ
 
-            
             foreach( var arr in Singleton.getInstance().GetArrows()  )
             {
-                int arr_pad = 70+arr.Item3;
-                int y0 = Singleton.getInstance().fh;
-                fig.DrawLine(def, arr.Item1.GetBeginX(), y0*arr.Item1.graph , arr.Item1.GetBeginX() , y0 * arr.Item1.graph + arr_pad);
-                fig.DrawLine(def, arr.Item2.GetWidth()+ arr.Item2.GetBeginX(), y0 * arr.Item2.graph, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 * arr.Item2.graph + arr_pad);
-                fig.DrawLine(def, arr.Item1.GetBeginX(), y0 * arr.Item1.graph + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 * arr.Item2.graph + arr_pad);
+                int arr_pad = Singleton.getInstance().mh + arr.Item3;
+                int y0 = Singleton.getInstance().fh * Math.Max(arr.Item1.graph, arr.Item2.graph);
 
-                fig.DrawLine(def, arr.Item1.GetBeginX(), y0 * arr.Item1.graph + arr_pad, arr.Item1.GetBeginX()+5, y0 * arr.Item1.graph + arr_pad+5);
-                fig.DrawLine(def, arr.Item1.GetBeginX(), y0 * arr.Item1.graph + arr_pad, arr.Item1.GetBeginX() + 5, y0 * arr.Item1.graph + arr_pad -5);
+                fig.DrawLine(def, arr.Item1.GetBeginX(), arr.Item1.GetBeginY(), arr.Item1.GetBeginX(), y0  + arr_pad);
+                fig.DrawLine(def, arr.Item2.GetWidth()+ arr.Item2.GetBeginX(), arr.Item2.GetBeginY(), arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 + arr_pad);
 
-                fig.DrawLine(def, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 * arr.Item2.graph + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX() - 5, y0 * arr.Item2.graph + arr_pad - 5);
-                fig.DrawLine(def, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 * arr.Item2.graph + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX() - 5, y0 * arr.Item2.graph + arr_pad + 5);
+                fig.DrawLine(def, arr.Item1.GetBeginX(), y0 + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0 + arr_pad);
 
-                fig.DrawString(((arr.Item2.GetBeginX()+ arr.Item2.GetWidth() - arr.Item1.GetBeginX())/zoom).ToString(), SystemFonts.DialogFont, br, new PointF( (arr.Item2.GetBeginX()+arr.Item2.GetWidth() + arr.Item1.GetBeginX()) /2 ,y0 * arr.Item2.graph + arr_pad ));
+                fig.DrawLine(def, arr.Item1.GetBeginX(), y0 + arr_pad, arr.Item1.GetBeginX()+5, y0  + arr_pad + 5);
+                fig.DrawLine(def, arr.Item1.GetBeginX(), y0  + arr_pad, arr.Item1.GetBeginX() + 5, y0  + arr_pad - 5);
+
+                fig.DrawLine(def, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0  + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX() - 5, y0  + arr_pad - 5);
+                fig.DrawLine(def, arr.Item2.GetWidth() + arr.Item2.GetBeginX(), y0  + arr_pad, arr.Item2.GetWidth() + arr.Item2.GetBeginX() - 5, y0  + arr_pad + 5);
+
+                fig.DrawString(((arr.Item2.GetBeginX()+ arr.Item2.GetWidth() - arr.Item1.GetBeginX())/zoom).ToString(), SystemFonts.DialogFont, br, new PointF( (arr.Item2.GetBeginX()+arr.Item2.GetWidth() + arr.Item1.GetBeginX()) /2,y0 + arr_pad ));
 
             }
-            int label_shist = 20;
-            fig.DrawString("=", SystemFonts.MessageBoxFont, br, new PointF(Singleton.getInstance().ord- label_shist, Singleton.getInstance().fh*0));
-            fig.DrawString("~", SystemFonts.MessageBoxFont, br, new PointF(Singleton.getInstance().ord- label_shist, Singleton.getInstance().fh * 1));
-            fig.DrawString("=~", SystemFonts.MessageBoxFont, br, new PointF(Singleton.getInstance().ord- label_shist, Singleton.getInstance().fh * 2));
+            int label_shist = 30;
+
+            fig.DrawString("=", font, br, new PointF( width - label_shist, Singleton.getInstance().fh * 0 + 3*label_shist ));
+            fig.DrawString("~", font, br, new PointF( width - label_shist, Singleton.getInstance().fh * 1 + 3*label_shist ));
+            fig.DrawString("=~", font, br, new PointF( width - label_shist, Singleton.getInstance().fh * 2 + 3*label_shist ));
             hScrollBar1.Maximum = pictureBox1.Width;
+            vScrollBar1.Maximum = pictureBox1.Height;
             pictureBox1.Image = myBitmap;
         }
 
@@ -250,12 +254,10 @@ namespace DenisApp
                     Singleton.getInstance().fh = k;
                     update_picture_box();
                 }
-                else
-                    MessageBox.Show("Введите значение большее 50 !");
             }
             catch
             {
-                MessageBox.Show("Введите число!");
+
             }
         }
 
@@ -270,7 +272,7 @@ namespace DenisApp
                 {
                     int div = 0;
                     foreach (var arr in Singleton.getInstance().GetArrows())
-                        if (arr.Item1 == form.begin|| arr.Item1==form.end|| arr.Item2 == form.begin || arr.Item2== form.end)
+                        if (arr.Item1.graph == form.begin.graph|| arr.Item1.graph==form.end.graph|| arr.Item2.graph == form.begin.graph || arr.Item2.graph== form.end.graph)
                         {
                             if (div < arr.Item3)
                                 div = arr.Item3;
@@ -294,6 +296,12 @@ namespace DenisApp
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             save(true);
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            int delta = e.NewValue - e.OldValue;
+            pictureBox1.Top -= delta * 10;
         }
     }
 
@@ -371,10 +379,10 @@ namespace DenisApp
         public int arrh;
         private Singleton()
         {
-            arrh = 0;
-            ord = 300;
+            ord = 500;
             time_slots = new List<TimeSlot>();
             arrows = new List<Tuple<TimeSlot, TimeSlot, int>>();
+            arrh = 0;
             right = 0;
             left = 0;
             mh = 0;
@@ -402,6 +410,10 @@ namespace DenisApp
         }
         public void UpdateBounds()
         {
+            arrh = 0;
+            right = 0;
+            left = 0;
+            mh = 0;
             foreach (var ts in time_slots)
             {
                 int temp = ts.GetBeginX() + ts.GetWidth();
@@ -416,10 +428,10 @@ namespace DenisApp
             int curr_arr_h = 0;
             foreach (var ts in arrows)
             {
-                if (curr_arr_h < ts.Item3)
+                if (curr_arr_h > ts.Item3)
                     curr_arr_h = ts.Item3;
             }
-            arrh = curr_arr_h+70;
+            arrh = curr_arr_h+mh;
         }
         public int GetWidth()
         {

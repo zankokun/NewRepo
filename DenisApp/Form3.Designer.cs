@@ -65,6 +65,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.DropDownWidth = 200;
             this.textBox1.FormattingEnabled = true;
             this.textBox1.Location = new System.Drawing.Point(134, 6);
             this.textBox1.Name = "textBox1";
